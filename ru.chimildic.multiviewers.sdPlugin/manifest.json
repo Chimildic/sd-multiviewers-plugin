@@ -24,7 +24,7 @@
 			"UUID": "ru.chimildic.multiviewers.viewers",
 			"Icon": "imgs/actions/counter/icon",
 			"Tooltip": "Shows the number of viewers on any stream",
-			"PropertyInspectorPath": "ui/viewers.html",
+			"PropertyInspectorPath": "ui/viewers/viewers.html",
 			"Controllers": [
 				"Keypad"
 			],

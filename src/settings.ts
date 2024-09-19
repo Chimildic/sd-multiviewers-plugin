@@ -1,8 +1,8 @@
 import streamDeck from "@elgato/streamdeck";
 import { GlobalSettings } from "./types";
-import { ClientCredentials } from "./api/types";
+import { Credentials } from "./api/types";
 
-export async function getSetting(key: keyof GlobalSettings): Promise<ClientCredentials | undefined> {
+export async function getSetting(key: keyof GlobalSettings): Promise<Credentials | undefined> {
     let globalSettings = await streamDeck.settings.getGlobalSettings<GlobalSettings>()
     return globalSettings[key]
 }

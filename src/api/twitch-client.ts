@@ -1,16 +1,18 @@
-import { FetchClient } from "./fetch-client"
+import { FetchClient, serialize } from "./fetch-client"
 import { getSetting, setSetting } from "../settings"
-import type { ClientCredentials, TwitchResponse, TwitchStreamData, FetchClientResponse } from "./types"
-import streamDeck from "@elgato/streamdeck"
+import type { Credentials, TwitchResponse, TwitchStreamData, FetchClientResponse, AuthRequest } from "./types"
 
 export class TwtichClient {
 
     private authClient: FetchClient
     private apiClient: FetchClient
+    private credentials: Credentials | undefined
 
-    private readonly clientId = '***REMOVED***'
-    private readonly clientSecret = '***REMOVED***'
-    private credentials: ClientCredentials | undefined
+    static readonly port = 26741
+    private static readonly clientId = '***REMOVED***'
+    private static readonly clientSecret = '***REMOVED***'
+    private static readonly redirectUrl = `http://localhost:${TwtichClient.port}/twitch`
+    static readonly authUrl = `https://id.twitch.tv/oauth2/authorize?client_id=${TwtichClient.clientId}&response_type=code&force_verify=true&redirect_uri=${TwtichClient.redirectUrl}`
 
     constructor() {
         this.authClient = new FetchClient({
@@ -33,16 +35,46 @@ export class TwtichClient {
         return this.apiClient.get<TwitchResponse<TwitchStreamData[]>>(path)
     }
 
-    private async fetchCredentials(): Promise<FetchClientResponse<ClientCredentials>> {
-        let body = `client_id=${this.clientId}&client_secret=${this.clientSecret}&grant_type=client_credentials`
-        let response = this.authClient.post<ClientCredentials>('/token', body, {
+    async onCodeReceived(code: string | undefined) {
+        if (code != undefined) {
+            let response = await this.exchangeCode(code)
+            setSetting('twitchCredentials', response?.body)
+        }
+    }
+
+    private async exchangeCode(code: string): Promise<FetchClientResponse<Credentials>> {
+        return this.postToTokenEndpoint({
+            grant_type: 'authorization_code',
+            code: code,
+            redirect_uri: TwtichClient.redirectUrl
+        })
+    }
+
+    private async refreshToken(refresh_token: string): Promise<FetchClientResponse<Credentials>> {
+        return this.postToTokenEndpoint({
+            grant_type: 'refresh_token',
+            refresh_token: refresh_token,
+        })
+    }
+
+    private async fetchCredentials(): Promise<FetchClientResponse<Credentials>> {
+        return this.postToTokenEndpoint({
+            grant_type: 'client_credentials'
+        })
+    }
+
+    private postToTokenEndpoint(body: AuthRequest): Promise<FetchClientResponse<Credentials>> {
+        body.client_id = TwtichClient.clientId
+        body.client_secret = TwtichClient.clientSecret
+        return this.authClient.post<Credentials>('/token', serialize(body), {
             headers: {
                 'content-type': 'application/x-www-form-urlencoded'
             }
-        }).then(response => {
-            response.body.expered_at_ms = Date.now() + (response.body.expires_in * 1000)
-            return response
-        })
+        }).then(this.appendExperedAt)
+    }
+
+    private appendExperedAt(response: FetchClientResponse<Credentials>): FetchClientResponse<Credentials> {
+        response.body.expered_at_ms = Date.now() + (response.body.expires_in * 1000)
         return response
     }
 
@@ -50,14 +82,16 @@ export class TwtichClient {
         if (this.credentials == undefined) {
             this.credentials = await getSetting('twitchCredentials')
         }
-        if (this.credentials == undefined || this.credentials.expered_at_ms - Date.now() < 3600000) {
-            this.credentials = (await this.fetchCredentials()).body
+        if (this.credentials == undefined) {
+            return options
+        }
+        if (this.credentials!.expered_at_ms - Date.now() < 120000) {
+            this.credentials = (await this.refreshToken(this.credentials!.refresh_token!)).body
             setSetting('twitchCredentials', this.credentials)
         }
         options.headers = {
-            'client-id': this.clientId,
+            'client-id': TwtichClient.clientId,
             'authorization': 'Bearer ' + this.credentials!.access_token,
-            'cache-control': 'no-cache'
         }
         return options
     }

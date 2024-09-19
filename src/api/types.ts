@@ -1,10 +1,21 @@
 export type * from './fetch-client'
 
-export type ClientCredentials = {
+export type AuthRequest = {
+    client_id?: string,
+    client_secret?: string,
+    grant_type?: 'client_credentials' | 'authorization_code' | 'refresh_token',
+    code?: string,
+    refresh_token?: string,
+    redirect_uri?: string
+}
+
+export type Credentials = {
     access_token: string,
     expires_in: number, // seconds
     expered_at_ms: number, 
     token_type: string,
+    refresh_token?: string,
+    scope?: string[]
 }
 
 export type TwitchResponse<T> = {

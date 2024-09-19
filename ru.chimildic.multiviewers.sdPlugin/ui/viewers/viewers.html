@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html>
+
+<head lang="en">
+    <title>Viewers Settings</title>
+    <meta charset="utf-8" />
+    <link rel="stylesheet" href="../sdpi.css">
+    <script src="https://cdn.jsdelivr.net/gh/geekyeggo/sdpi-components@v3/dist/sdpi-components.js"></script>
+    <script src="./index.js"></script>
+</head>
+
+<body>
+    <div class="sdpi-wrapper">
+        <div type="tabs" class="sdpi-item">
+            <div class="sdpi-item-label empty"></div>
+            <div class="tabs">
+                <div class="tab selected" data-target="#twitch-tab">Twitch</div>
+                <div class="tab" data-target="#vkplaylive-tab">VK Play Live</div>
+            </div>
+        </div>
+
+        <hr class="tab-separator">
+
+        <div>
+            <div id="twitch-tab" class="tab-container">
+                <sdpi-item>
+                    <sdpi-button onclick="javascript:connectTo('twitch')">
+                        <sdpi-i18n key="btnConnectTwitch"></sdpi-i18n>
+                    </sdpi-button>
+                </sdpi-item>
+                <sdpi-item label="__MSG_channelName__">
+                    <sdpi-textfield setting="twitchChannelName" placeholder="__MSG_channelNamePlaceholder__"></sdpi-textfield>
+                </sdpi-item>
+                <sdpi-item label="__MSG_iconColor__">
+                    <sdpi-color setting="twitchIconColor"></sdpi-color>
+                </sdpi-item>
+                <sdpi-item label="__MSG_textColor__">
+                    <sdpi-color setting="twitchTextColor"></sdpi-color>
+                </sdpi-item>
+            </div>
+            <div id="vkplaylive-tab" class="tab-container">
+                <sdpi-item label="__MSG_channelName__">
+                    <sdpi-textfield setting="vkPlayLiveChannelName" placeholder="__MSG_channelNamePlaceholder__"></sdpi-textfield>
+                </sdpi-item>
+            </div>
+        </div>
+
+        <hr class="tab-separator">
+
+        <sdpi-item label="__MSG_backgroundColor__">
+            <sdpi-color setting="backgroundColor"></sdpi-color>
+        </sdpi-item>
+
+        <script src="./tabs.js"></script>
+</body>
+
+</html>

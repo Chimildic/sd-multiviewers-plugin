@@ -1,6 +1,6 @@
-import type { ClientCredentials } from "./api/types"
+import type { Credentials } from "./api/types"
 
 export type GlobalSettings = {
-    twitchCredentials?: ClientCredentials,
-    vkPlayLiveCredentials?: ClientCredentials,
+    twitchCredentials?: Credentials,
+    vkPlayLiveCredentials?: Credentials,
 }
