@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html>
+
+<head lang="en">
+    <title>Viewers Settings</title>
+    <meta charset="utf-8" />
+    <script src="https://cdn.jsdelivr.net/gh/geekyeggo/sdpi-components@v3/dist/sdpi-components.js"></script>
+    <script>
+        SDPIComponents.i18n.locales = {
+            en: {
+                channelName: 'Channel name'
+            },
+        };
+    </script>
+</head>
+
+<body>
+    <sdpi-item label="Twitch">
+        <sdpi-textfield setting="twitchChannelName" placeholder="__MSG_channelName__"></sdpi-textfield>
+    </sdpi-item>
+    <sdpi-item label="VK Play Live">
+        <sdpi-textfield setting="vkPlayLiveChannelName" placeholder="__MSG_channelName__"></sdpi-textfield>
+    </sdpi-item>
+</body>
+
+</html>
