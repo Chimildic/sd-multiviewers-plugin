@@ -1,5 +1,6 @@
-import { FetchClient, serialize } from "./fetch-client"
+import { FetchClient } from "./fetch-client"
 import { getSetting, setSetting } from "../settings"
+import { appendExperedAt, serialize } from "./common"
 import type { Credentials, TwitchResponse, TwitchStreamData, FetchClientResponse, AuthRequest } from "./types"
 
 export class TwtichClient {
@@ -70,12 +71,7 @@ export class TwtichClient {
             headers: {
                 'content-type': 'application/x-www-form-urlencoded'
             }
-        }).then(this.appendExperedAt)
-    }
-
-    private appendExperedAt(response: FetchClientResponse<Credentials>): FetchClientResponse<Credentials> {
-        response.body.expered_at_ms = Date.now() + (response.body.expires_in * 1000)
-        return response
+        }).then(appendExperedAt)
     }
 
     private async transformRequest(url: string, options: RequestInit): Promise<RequestInit> {

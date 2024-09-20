@@ -377,13 +377,3 @@ export class FetchClient {
     this.config.options = { ...options }
   }
 }
-
-export function serialize(obj: object) {
-  let str = []
-  for (let p in obj) {
-    if (obj.hasOwnProperty(p)) {
-      str.push(encodeURIComponent(p) + "=" + obj[p])
-    }
-  }
-  return str.join('&')
-}

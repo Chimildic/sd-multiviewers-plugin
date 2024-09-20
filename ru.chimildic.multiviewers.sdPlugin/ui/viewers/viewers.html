@@ -15,7 +15,7 @@
             <div class="sdpi-item-label empty"></div>
             <div class="tabs">
                 <div class="tab selected" data-target="#twitch-tab">Twitch</div>
-                <div class="tab" data-target="#vkplaylive-tab">VK Play Live</div>
+                <div class="tab" data-target="#vpl-tab">VK Play Live</div>
             </div>
         </div>
 
@@ -38,9 +38,15 @@
                     <sdpi-color setting="twitchTextColor"></sdpi-color>
                 </sdpi-item>
             </div>
-            <div id="vkplaylive-tab" class="tab-container">
+            <div id="vpl-tab" class="tab-container">
                 <sdpi-item label="__MSG_channelName__">
-                    <sdpi-textfield setting="vkPlayLiveChannelName" placeholder="__MSG_channelNamePlaceholder__"></sdpi-textfield>
+                    <sdpi-textfield setting="vplChannelName" placeholder="__MSG_channelNamePlaceholder__"></sdpi-textfield>
+                </sdpi-item>
+                <sdpi-item label="__MSG_iconColor__">
+                    <sdpi-color setting="vplIconColor"></sdpi-color>
+                </sdpi-item>
+                <sdpi-item label="__MSG_textColor__">
+                    <sdpi-color setting="vplTextColor"></sdpi-color>
                 </sdpi-item>
             </div>
         </div>

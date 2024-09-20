@@ -12,7 +12,7 @@ export type AuthRequest = {
 export type Credentials = {
     access_token: string,
     expires_in: number, // seconds
-    expered_at_ms: number, 
+    expered_at_ms: number,
     token_type: string,
     refresh_token?: string,
     scope?: string[]
@@ -41,4 +41,28 @@ export type TwitchStreamData = {
     thumbnail_url: string
     tag_ids: string[]
     is_mature: boolean
+}
+
+export type VPLResonse<T> = {
+    data: T
+}
+
+export type VPLChannelData = {
+    // неполный
+    stream?: {
+        id: string,
+        title: string,
+        started_at: number,
+        ended_at: number,
+        preview_url: string,
+        category: {
+            id: string,
+            title: string,
+            type: string,
+        },
+        counters: {
+            viewers: 123,
+            views: 1324
+        },
+    }
 }
