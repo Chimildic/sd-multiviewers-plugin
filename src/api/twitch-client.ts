@@ -10,8 +10,8 @@ export class TwtichClient {
     private credentials: Credentials | undefined
 
     static readonly port = 26741
-    private static readonly clientId = '***REMOVED***'
-    private static readonly clientSecret = '***REMOVED***'
+    private static readonly clientId = ''
+    private static readonly clientSecret = ''
     private static readonly redirectUrl = `http://localhost:${TwtichClient.port}/twitch`
     static readonly authUrl = `https://id.twitch.tv/oauth2/authorize?client_id=${TwtichClient.clientId}&response_type=code&force_verify=true&redirect_uri=${TwtichClient.redirectUrl}`
 

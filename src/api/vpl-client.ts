@@ -37,7 +37,7 @@ export class VPLClient {
         let body = serialize({ grant_type: 'client_credentials' })
         return this.authClient.post<Credentials>('https://api.live.vkplay.ru/oauth/server/token', body, {
             headers: {
-                'authorization': 'Basic ***REMOVED***',
+                'authorization': 'Basic <base64encoded_credeantials>',
                 'content-type': 'application/x-www-form-urlencoded'
             }
         }).then(appendExperedAt).catch(e => (streamDeck.logger.error(e), e))

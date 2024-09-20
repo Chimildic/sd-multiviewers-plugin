@@ -4,22 +4,6 @@
 	"Author": "Chimildic",
 	"Actions": [
 		{
-			"Name": "Counter",
-			"UUID": "ru.chimildic.multiviewers.increment",
-			"Icon": "imgs/actions/counter/icon",
-			"Tooltip": "Displays a count, which increments by one on press.",
-			"PropertyInspectorPath": "ui/increment-counter.html",
-			"Controllers": [
-				"Keypad"
-			],
-			"States": [
-				{
-					"Image": "imgs/actions/counter/key",
-					"TitleAlignment": "middle"
-				}
-			]
-		},
-		{
 			"Name": "Viewers",
 			"UUID": "ru.chimildic.multiviewers.viewers",
 			"Icon": "imgs/actions/counter/icon",
