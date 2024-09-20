@@ -82,11 +82,8 @@ export class TwtichClient {
         if (this.credentials == undefined) {
             this.credentials = await getSetting('twitchCredentials')
         }
-        if (this.credentials == undefined) {
-            return options
-        }
-        if (this.credentials!.expered_at_ms - Date.now() < 120000) {
-            this.credentials = (await this.refreshToken(this.credentials!.refresh_token!)).body
+        if (this.credentials == undefined || this.credentials!.expered_at_ms - Date.now() < 3600000) {
+            this.credentials = (await this.fetchCredentials()).body
             setSetting('twitchCredentials', this.credentials)
         }
         options.headers = {
